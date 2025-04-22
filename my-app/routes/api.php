@@ -14,3 +14,5 @@ Route::post('/client', [ClientController::class, 'addClient']);
 Route::get('/client', [ClientController::class, 'getClient']);
 Route::patch('/client/{id}', [ClientController::class, 'updateClient']);
 Route::delete('/client/{id}', [ClientController::class, 'delClient']);
+Route::get('/export-users', [ClientController::class, 'exportUsers']);
+

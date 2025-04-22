@@ -27,6 +27,11 @@ async function delUser(id) {
     show()
   }
 }
+
+function exportToExcel() {
+  window.open('http://127.0.0.1:8000/export-users', '_blank');
+}
+
 </script>
 
 <template>
@@ -36,7 +41,7 @@ async function delUser(id) {
 
       <div class="action-buttons">
         <router-link to="/create" class="btn btn-primary">Добавить пользователя</router-link>
-        <button class="btn btn-success">Экспорт в Excel</button>
+        <button class="btn btn-success" @click="exportToExcel">Экспорт в Excel</button>
       </div>
 
       <div class="search-container">

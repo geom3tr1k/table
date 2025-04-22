@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClientController extends Controller
 {
@@ -30,7 +32,7 @@ class ClientController extends Controller
 
         return response() -> json($client);
     }
-    
+
     public function updateClient(Request $request, $id)
     {
         $client = User::findOrFail($id);
@@ -57,4 +59,10 @@ class ClientController extends Controller
             "status" => 200
         ]);
     }
+
+
+    public function exportUsers()
+{
+    return Excel::download(new UsersExport, 'users.xlsx');
+}
 }

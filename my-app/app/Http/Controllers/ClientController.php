@@ -30,14 +30,25 @@ class ClientController extends Controller
 
         return response() -> json($client);
     }
-
-    public function updateClient(Request $request, $id) {
-
-        $client = User::find($id);
-        $client ->update($request->all());
+    
+    public function updateClient(Request $request, $id)
+    {
+        $client = User::findOrFail($id);
+    
+        $data = array_filter(
+            $request->only(['name', 'email', 'phone', 'date', 'status']),
+            fn($value) => !is_null($value)
+        );
+    
+        if (empty($data)) {
+            return response()->json(['message' => 'Нет данных для обновления'], 422);
+        }
+    
+        $client->update($data);
+    
         return response()->json($client);
-
     }
+    
 
     public function delClient($id) {
         $client = User::find($id);

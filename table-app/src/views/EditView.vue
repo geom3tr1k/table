@@ -9,15 +9,17 @@ const phone = ref('')
 const date = ref('')
 const status = ref('')
 const router = useRouter()
+const route = useRoute()
 
 
 
 
-async function addUser() {
-    const responce = await fetch('http://127.0.0.1:8000/client', {
-        method: 'post',
+async function updUser() {
+    const response = await fetch(`http://127.0.0.1:8000/client/${route.params.id}`, {
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
+            'Accept': 'application/json',
         },
         body: JSON.stringify({
             name: name.value,
@@ -26,52 +28,54 @@ async function addUser() {
             date: date.value,
             status: status.value
         })
+    });
 
-    })
-    if (responce.ok) {
+    if (response.ok) {
         router.push('/')
+    } else {
+        const error = await response.json()
+        alert('Ошибка обновления: ' + JSON.stringify(error.errors || error.message))
     }
+
 }
-
-
-
 </script>
+
 <template>
     <div class="form-container">
-        <h2>Добавить пользователя</h2>
-        <form @submit.prevent="addUser">
+        <h2>Обновить информацию пользователя</h2>
+        <form @submit.prevent="updUser">
             <div class="form-group">
                 <label>ФИО:</label>
-                <input type="text" required v-model="name">
+                <input type="text"  v-model="name">
             </div>
 
             <div class="form-group">
                 <label>Email:</label>
-                <input type="email" required v-model="email">
+                <input type="email"  v-model="email">
             </div>
 
             <div class="form-group">
                 <label>Телефон:</label>
-                <input type="text" required v-model="phone">
+                <input type="text"  v-model="phone">
             </div>
 
             <div class="form-group">
                 <label>Дата регистрации:</label>
-                <input type="date" required v-model="date">
+                <input type="date"  v-model="date">
             </div>
 
             <div class="form-group">
                 <label>Статус:</label>
-                <select required v-model="status">
+                <select  v-model="status">
                     <option value="1">Активен</option>
                     <option value="0">Неактивен</option>
                 </select>
             </div>
 
-            <button type="submit" class="btn-blue">Добавить</button>
+            <button type="submit" class="btn-blue">Сохранить</button>
         </form>
     </div>
-
+    
 </template>
 
 <style scoped>

@@ -68,14 +68,14 @@ async function delUser(id) {
                   {{ client.status ? 'Активен' : 'Неактивен' }}
                 </span>
               </td>
-              <td>
-                <button class="btn btn-primary" style="padding: 5px 10px;">Редактировать</button>
+              <td style="align-items: center;">
+                <router-link :to='"/edit/" + client.id' class="btn btn-primary" style="padding: 5px 10px;">Редактировать</router-link>
                 <button class="btn btn-danger" style="padding: 5px 10px;" @click="delUser(client.id)">Удалить</button>
               </td>
             </tr>
 
           </tbody>
-        </table>
+        </table> 
       </div>
     </div>
   </main>
